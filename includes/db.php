@@ -6,8 +6,8 @@
 
 // Database credentials (prefer environment variables in production)
 $host = getenv('DB_HOST') ?: 'localhost';
-$dbname = getenv('DB_NAME') ?: 'u966926210_casa_freddo';
-$username = getenv('DB_USER') ?: 'u966926210_syedwasiulhass';
+$dbname = getenv('DB_NAME') ?: 'u966926210_casafreddo';
+$username = getenv('DB_USER') ?: 'u966926210_wasi';
 $password = getenv('DB_PASS') ?: 'P@kistan_2244';
 
 // Create MySQLi connection
