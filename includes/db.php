@@ -6,9 +6,9 @@
 
 // Database credentials
 $host = 'localhost';
-$dbname = 'casa_freddo';
-$username = 'root';
-$password = ''; // Default XAMPP password is empty
+$dbname = 'u966926210_casa_freddo';
+$username = 'u966926210_syedwasiulhass'; // or your DB user from hPanel
+$password = '7bMlvB[@yV#';
 
 // Create MySQLi connection
 $mysqli = new mysqli($host, $username, $password, $dbname);
