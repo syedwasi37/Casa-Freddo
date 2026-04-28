@@ -4,11 +4,11 @@
  * Connects to MySQL database using MySQLi
  */
 
-// Database credentials (prefer environment variables in production)
-$host = getenv('DB_HOST') ?: 'localhost';
-$dbname = getenv('DB_NAME') ?: 'u966926210_casafreddo';
-$username = getenv('DB_USER') ?: 'u966926210_wasi';
-$password = getenv('DB_PASS') ?: 'P@kistan_2244';
+// Database credentials
+$host = 'localhost';
+$dbname = 'u966926210_casafreddo';
+$username = 'u966926210_wasi';
+$password = 'P@kistan_2244';
 
 // Create MySQLi connection
 $mysqli = new mysqli($host, $username, $password, $dbname);
