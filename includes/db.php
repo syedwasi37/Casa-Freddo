@@ -8,7 +8,7 @@
 $host = getenv('DB_HOST') ?: 'localhost';
 $dbname = getenv('DB_NAME') ?: 'u966926210_casa_freddo';
 $username = getenv('DB_USER') ?: 'u966926210_syedwasiulhass';
-$password = getenv('DB_PASS') ?: '';
+$password = getenv('DB_PASS') ?: '7bMlvB[@yV#';
 
 // Create MySQLi connection
 $mysqli = new mysqli($host, $username, $password, $dbname);
