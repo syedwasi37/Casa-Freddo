@@ -1,10 +1,8 @@
 -- Casa Freddo Database Setup
 -- Run this file to create the database, tables, and sample data
 
--- Create database
-CREATE DATABASE IF NOT EXISTS casa_freddo CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
-USE casa_freddo;
+-- NOTE for shared hosting (Hostinger):
+-- Select your target DB (e.g. u966926210_casafreddo) in phpMyAdmin before importing.
 
 -- Users table (for admin login)
 CREATE TABLE IF NOT EXISTS users (
