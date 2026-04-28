@@ -21,7 +21,7 @@ $featuredItems = $stmt->fetchAll();
 <!-- Hero Section -->
 <section class="hero">
     <div class="hero-content">
-        <span class="hero-subtitle fade-in-up"> Italian Gelato</span>
+        <span class="hero-subtitle fade-in-up">  Gelato</span>
         <h1 class="hero-title fade-in-up delay-1">Artisan Gelato, <br><span style="color: var(--color-gold);">Crafted with Passion</span></h1>
         <p class="hero-desc fade-in-up delay-2">
             Experience the authentic taste of Italy with our handcrafted gelato, 
