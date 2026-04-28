@@ -4,7 +4,7 @@
  * Connects to MySQL database using MySQLi
  */
 
-// Database credentials (prefer environment variables in production)
+// Database credentials
 $host = 'localhost';
 $dbname = 'u966926210_casafreddo';
 $username = 'u966926210_wasi';
