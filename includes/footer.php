@@ -53,7 +53,38 @@
             </div>
         </div>
     </footer>
+    <div class="location-modal-backdrop" id="locationModalBackdrop" aria-hidden="true">
+        <div class="location-modal" role="dialog" aria-modal="true" aria-labelledby="locationModalTitle">
+            <h3 id="locationModalTitle">Choose Delivery Location</h3>
+            <p>Set your area once so checkout stays fast.</p>
+            <form id="locationForm">
+                <div class="form-group">
+                    <label for="country">Country</label>
+                    <select id="country" name="country" class="form-control" required>
+                        <option value="">Select Country</option>
+                        <option value="Pakistan">Pakistan</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="city">City</label>
+                    <select id="city" name="city" class="form-control" required>
+                        <option value="">Select City</option>
+                        <option value="Karachi">Karachi</option>
+                        <option value="Lahore">Lahore</option>
+                        <option value="Islamabad">Islamabad</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="area">Area</label>
+                    <input type="text" id="area" name="area" class="form-control" placeholder="e.g. Gulshan, DHA, Johar" required>
+                </div>
+                <div class="location-actions">
+                    <button type="button" class="btn btn-outline" id="skipLocation">Later</button>
+                    <button type="submit" class="btn btn-primary">Save Location</button>
+                </div>
+            </form>
+        </div>
+    </div>
     <script src="assets/js/main.js"></script>
 </body>
 </html>
-

@@ -71,7 +71,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <p style="margin-top: 24px; font-size: 0.85rem; color: var(--color-gray);">
             Default: <strong>admin</strong> / <strong>admin123</strong>
         </p>
+        <p style="margin-top: 8px; font-size: 0.9rem;">
+            <a href="register.php">Create New Admin</a>
+        </p>
     </div>
 </body>
 </html>
-

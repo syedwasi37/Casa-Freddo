@@ -9,12 +9,31 @@ require_once 'includes/db.php';
 require_once 'includes/functions.php';
 require_once 'includes/header.php';
 
+// Get filter from URL
+$activeCategory = isset($_GET['category']) ? (int)$_GET['category'] : 'all';
+
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = [];
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'add_to_cart') {
+    $itemId = (int)($_POST['item_id'] ?? 0);
+    $qty = max(1, (int)($_POST['quantity'] ?? 1));
+    if ($itemId > 0) {
+        if (!isset($_SESSION['cart'][$itemId])) {
+            $_SESSION['cart'][$itemId] = 0;
+        }
+        $_SESSION['cart'][$itemId] += $qty;
+        setFlashMessage('Item added to cart.', 'success');
+    } else {
+        setFlashMessage('Unable to add item.', 'error');
+    }
+    redirect('menu.php' . ($activeCategory !== 'all' ? '?category=' . (int)$activeCategory : ''));
+}
+
 // Get all categories
 $catStmt = $pdo->query("SELECT * FROM categories ORDER BY id");
 $categories = $catStmt->fetchAll();
-
-// Get filter from URL
-$activeCategory = isset($_GET['category']) ? (int)$_GET['category'] : 'all';
 
 // Build query based on filter
 $sql = "SELECT m.*, c.name as category_name 
@@ -36,6 +55,7 @@ $menuItems = $stmt->fetchAll();
 
 <section class="section section-cream" style="padding-top: 140px;">
     <div class="container">
+        <?php echo showFlashMessage(); ?>
         <p class="section-subtitle reveal">Our Collection</p>
         <h2 class="section-title reveal">Gelato <span>Menu</span></h2>
         
@@ -70,6 +90,12 @@ $menuItems = $stmt->fetchAll();
                     <p class="product-desc"><?php echo sanitize($item['description']); ?></p>
                     <div class="product-footer">
                         <span class="product-price"><?php echo formatPrice($item['price']); ?></span>
+                        <form action="menu.php<?php echo $activeCategory !== 'all' ? '?category=' . (int)$activeCategory : ''; ?>" method="POST" class="add-cart-form">
+                            <input type="hidden" name="action" value="add_to_cart">
+                            <input type="hidden" name="item_id" value="<?php echo (int)$item['id']; ?>">
+                            <input type="number" name="quantity" value="1" min="1" max="20" class="qty-input">
+                            <button type="submit" class="btn btn-sm btn-primary">Add</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -84,4 +110,3 @@ $menuItems = $stmt->fetchAll();
 </section>
 
 <?php require_once 'includes/footer.php'; ?>
-

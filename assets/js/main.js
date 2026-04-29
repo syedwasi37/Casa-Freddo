@@ -141,5 +141,72 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-});
 
+    // Location modal flow
+    const locationModal = document.getElementById('locationModalBackdrop');
+    const locationForm = document.getElementById('locationForm');
+    const locationTrigger = document.getElementById('locationTrigger');
+    const skipLocation = document.getElementById('skipLocation');
+    const locationStorageKey = 'cf_location_v1';
+
+    function showLocationModal() {
+        if (!locationModal) return;
+        locationModal.classList.add('active');
+        locationModal.setAttribute('aria-hidden', 'false');
+    }
+
+    function hideLocationModal() {
+        if (!locationModal) return;
+        locationModal.classList.remove('active');
+        locationModal.setAttribute('aria-hidden', 'true');
+    }
+
+    function setLocationLabel(area) {
+        if (locationTrigger && area) {
+            locationTrigger.textContent = area;
+        }
+    }
+
+    if (locationTrigger) {
+        locationTrigger.addEventListener('click', showLocationModal);
+    }
+
+    if (skipLocation) {
+        skipLocation.addEventListener('click', hideLocationModal);
+    }
+
+    if (locationForm) {
+        locationForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const formData = new FormData(locationForm);
+            const country = formData.get('country');
+            const city = formData.get('city');
+            const area = formData.get('area');
+            if (!country || !city || !area) return;
+
+            localStorage.setItem(locationStorageKey, JSON.stringify({ country, city, area }));
+            setLocationLabel(area);
+
+            try {
+                await fetch('set_location.php', {
+                    method: 'POST',
+                    body: formData
+                });
+            } catch (_) {}
+
+            hideLocationModal();
+        });
+    }
+
+    const savedLocation = localStorage.getItem(locationStorageKey);
+    if (savedLocation) {
+        try {
+            const parsed = JSON.parse(savedLocation);
+            if (parsed && parsed.area) {
+                setLocationLabel(parsed.area);
+            }
+        } catch (_) {}
+    } else {
+        setTimeout(showLocationModal, 700);
+    }
+});

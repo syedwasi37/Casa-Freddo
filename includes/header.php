@@ -8,6 +8,10 @@ if (session_status() === PHP_SESSION_NONE && !headers_sent()) {
     session_start();
 }
 require_once __DIR__ . '/functions.php';
+$cartCount = getCartCount();
+$customerLoggedIn = isCustomerLoggedIn();
+$customerName = $customerLoggedIn ? getCustomerName() : '';
+$locationLabel = $_SESSION['delivery_location']['area'] ?? 'Set Location';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -39,8 +43,16 @@ require_once __DIR__ . '/functions.php';
                 <li><a href="menu.php" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'menu.php' ? 'active' : ''; ?>">Menu</a></li>
                 <li><a href="about.php" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'about.php' ? 'active' : ''; ?>">About</a></li>
                 <li><a href="contact.php" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'contact.php' ? 'active' : ''; ?>">Contact</a></li>
+                <li><a href="cart.php" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'cart.php' ? 'active' : ''; ?>">Cart (<?php echo $cartCount; ?>)</a></li>
+                <?php if ($customerLoggedIn): ?>
+                    <li><a href="checkout.php" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'checkout.php' ? 'active' : ''; ?>">Checkout</a></li>
+                    <li><a href="logout.php" class="nav-link">Logout (<?php echo sanitize($customerName); ?>)</a></li>
+                <?php else: ?>
+                    <li><a href="login.php" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'login.php' ? 'active' : ''; ?>">Login</a></li>
+                    <li><a href="register.php" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'register.php' ? 'active' : ''; ?>">Register</a></li>
+                <?php endif; ?>
+                <li><button type="button" id="locationTrigger" class="nav-link nav-link-btn"><?php echo sanitize($locationLabel); ?></button></li>
             </ul>
         </div>
     </nav>
     <main>
-

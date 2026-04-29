@@ -39,6 +39,20 @@ function isLoggedIn() {
 }
 
 /**
+ * Check if a customer is logged in
+ */
+function isCustomerLoggedIn() {
+    return isset($_SESSION['customer_id']) && !empty($_SESSION['customer_id']);
+}
+
+/**
+ * Get customer display name
+ */
+function getCustomerName() {
+    return $_SESSION['customer_name'] ?? 'Guest';
+}
+
+/**
  * Redirect to a given URL
  */
 function redirect($url) {
@@ -51,6 +65,60 @@ function redirect($url) {
  */
 function formatPrice($price) {
     return 'Rs ' . number_format($price, 2);
+}
+
+/**
+ * Create customer/order tables if missing
+ */
+function ensureCustomerTables($pdo) {
+    $pdo->query("CREATE TABLE IF NOT EXISTS customers (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(120) NOT NULL,
+        email VARCHAR(150) NOT NULL UNIQUE,
+        phone VARCHAR(30) DEFAULT NULL,
+        password VARCHAR(255) NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    ) ENGINE=InnoDB");
+
+    $pdo->query("CREATE TABLE IF NOT EXISTS orders (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        customer_id INT NOT NULL,
+        total_amount DECIMAL(10,2) NOT NULL,
+        status VARCHAR(30) NOT NULL DEFAULT 'pending',
+        country VARCHAR(100) NOT NULL,
+        city VARCHAR(100) NOT NULL,
+        area VARCHAR(150) NOT NULL,
+        address_line VARCHAR(255) NOT NULL,
+        notes TEXT DEFAULT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (customer_id) REFERENCES customers(id) ON DELETE CASCADE
+    ) ENGINE=InnoDB");
+
+    $pdo->query("CREATE TABLE IF NOT EXISTS order_items (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        order_id INT NOT NULL,
+        menu_item_id INT NOT NULL,
+        quantity INT NOT NULL,
+        unit_price DECIMAL(10,2) NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
+        FOREIGN KEY (menu_item_id) REFERENCES menu_items(id) ON DELETE CASCADE
+    ) ENGINE=InnoDB");
+}
+
+/**
+ * Get total cart items count
+ */
+function getCartCount() {
+    if (empty($_SESSION['cart'])) {
+        return 0;
+    }
+
+    $count = 0;
+    foreach ($_SESSION['cart'] as $qty) {
+        $count += (int)$qty;
+    }
+    return $count;
 }
 
 /**
@@ -83,4 +151,3 @@ function uploadImage($file, $uploadDir = '../uploads/') {
     return false;
 }
 ?>
-
