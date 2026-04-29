@@ -92,6 +92,17 @@ function ensureCustomerTables($pdo) {
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
     ) ENGINE=InnoDB");
+
+    $pdo->query("CREATE TABLE IF NOT EXISTS reviews (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        user_id INT NOT NULL,
+        menu_item_id INT NOT NULL,
+        rating TINYINT NOT NULL,
+        comment TEXT DEFAULT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+        FOREIGN KEY (menu_item_id) REFERENCES menu_items(id) ON DELETE CASCADE
+    ) ENGINE=InnoDB");
 }
 
 /**

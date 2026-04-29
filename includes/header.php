@@ -12,6 +12,8 @@ $cartCount = getCartCount();
 $customerLoggedIn = isCustomerLoggedIn();
 $customerName = $customerLoggedIn ? getCustomerName() : '';
 $locationLabel = $_SESSION['delivery_location']['area'] ?? 'Set Location';
+$cartNotice = $_SESSION['cart_notice'] ?? '';
+unset($_SESSION['cart_notice']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -43,16 +45,26 @@ $locationLabel = $_SESSION['delivery_location']['area'] ?? 'Set Location';
                 <li><a href="menu.php" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'menu.php' ? 'active' : ''; ?>">Menu</a></li>
                 <li><a href="about.php" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'about.php' ? 'active' : ''; ?>">About</a></li>
                 <li><a href="contact.php" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'contact.php' ? 'active' : ''; ?>">Contact</a></li>
-                <li><a href="cart.php" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'cart.php' ? 'active' : ''; ?>">Cart (<?php echo $cartCount; ?>)</a></li>
                 <?php if ($customerLoggedIn): ?>
-                    <li><a href="checkout.php" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'checkout.php' ? 'active' : ''; ?>">Checkout</a></li>
+                    <?php if ($cartCount > 0): ?>
+                        <li><a href="checkout.php" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'checkout.php' ? 'active' : ''; ?>">Checkout</a></li>
+                    <?php endif; ?>
                     <li><a href="logout.php" class="nav-link">Logout (<?php echo sanitize($customerName); ?>)</a></li>
                 <?php else: ?>
                     <li><a href="login.php" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'login.php' ? 'active' : ''; ?>">Login</a></li>
                     <li><a href="register.php" class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'register.php' ? 'active' : ''; ?>">Register</a></li>
                 <?php endif; ?>
-                <li><button type="button" id="locationTrigger" class="nav-link nav-link-btn"><?php echo sanitize($locationLabel); ?></button></li>
             </ul>
+            <div class="nav-utility">
+                <button type="button" id="locationTrigger" class="nav-link nav-link-btn"><?php echo sanitize($locationLabel); ?></button>
+                <a href="cart.php" class="cart-icon-link <?php echo basename($_SERVER['PHP_SELF']) == 'cart.php' ? 'active' : ''; ?>" aria-label="Open cart">
+                    <span class="cart-icon">🛒</span>
+                    <span class="cart-count"><?php echo (int)$cartCount; ?></span>
+                </a>
+            </div>
         </div>
     </nav>
+    <?php if ($cartNotice): ?>
+    <div class="cart-toast" id="cartToast"><?php echo sanitize($cartNotice); ?></div>
+    <?php endif; ?>
     <main>

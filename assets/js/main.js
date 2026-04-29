@@ -217,4 +217,12 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         showLocationModal();
     }
+
+    const cartToast = document.getElementById('cartToast');
+    if (cartToast) {
+        setTimeout(() => {
+            cartToast.style.opacity = '0';
+            setTimeout(() => cartToast.remove(), 350);
+        }, 1800);
+    }
 });

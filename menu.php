@@ -24,6 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             $_SESSION['cart'][$itemId] = 0;
         }
         $_SESSION['cart'][$itemId] += $qty;
+        $_SESSION['cart_notice'] = $qty . ' item added to cart';
         setFlashMessage('Item added to cart.', 'success');
     } else {
         setFlashMessage('Unable to add item.', 'error');

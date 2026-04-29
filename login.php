@@ -23,11 +23,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!$email || !$password) {
         $error = 'Please enter email and password.';
     } else {
-        $stmt = $pdo->prepare("SELECT * FROM users WHERE (email = ? OR username = ?) AND (is_admin = 0 OR is_admin IS NULL) LIMIT 1");
+        $stmt = $pdo->prepare("SELECT * FROM users WHERE (email = ? OR username = ?) LIMIT 1");
         $stmt->execute([$email, $email]);
         $user = $stmt->fetch();
 
         if ($user && password_verify($password, $user['password'])) {
+            if ((int)($user['is_admin'] ?? 0) === 1) {
+                $_SESSION['admin_id'] = $user['id'];
+                $_SESSION['admin_username'] = $user['username'];
+                redirect('admin/dashboard.php');
+            }
             $_SESSION['customer_id'] = $user['id'];
             $_SESSION['customer_name'] = $user['full_name'] ?: $user['username'];
             $_SESSION['customer_email'] = $user['email'];

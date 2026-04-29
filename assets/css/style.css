@@ -180,6 +180,7 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 20px;
 }
 
 .logo {
@@ -257,6 +258,59 @@ h1, h2, h3, h4, h5, h6 {
 .nav-menu {
     display: flex;
     gap: 40px;
+}
+
+.nav-utility {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.cart-icon-link {
+    position: relative;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(15, 15, 15, 0.08);
+    color: var(--color-black);
+}
+
+.navbar.scrolled .cart-icon-link {
+    background: rgba(255,255,255,0.08);
+    color: var(--color-cream);
+}
+
+.cart-count {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    min-width: 18px;
+    height: 18px;
+    border-radius: 9px;
+    background: #ff4d4f;
+    color: #fff;
+    font-size: 0.72rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 5px;
+    font-weight: 600;
+}
+
+.cart-toast {
+    position: fixed;
+    top: 18px;
+    right: 18px;
+    z-index: 6000;
+    background: #111;
+    color: #fff;
+    padding: 10px 14px;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    animation: fadeInUp 0.35s ease forwards;
 }
 
 .nav-link {
@@ -932,6 +986,10 @@ textarea.form-control {
         padding: 100px 40px;
         transition: var(--transition);
         gap: 20px;
+    }
+
+    .nav-utility {
+        margin-left: auto;
     }
 
     .nav-menu.active {
