@@ -23,13 +23,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!$email || !$password) {
         $error = 'Please enter email and password.';
     } else {
-        $stmt = $pdo->prepare("SELECT * FROM customers WHERE email = ?");
+        $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ? AND is_admin = 0");
         $stmt->execute([$email]);
         $user = $stmt->fetch();
 
         if ($user && password_verify($password, $user['password'])) {
             $_SESSION['customer_id'] = $user['id'];
-            $_SESSION['customer_name'] = $user['name'];
+            $_SESSION['customer_name'] = $user['full_name'] ?: $user['username'];
             $_SESSION['customer_email'] = $user['email'];
             redirect($redirectTo);
         } else {

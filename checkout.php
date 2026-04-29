@@ -52,17 +52,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!$country || !$city || !$area || !$addressLine) {
         $error = 'Please complete delivery details.';
     } else {
-        $orderStmt = $pdo->prepare("INSERT INTO orders (customer_id, total_amount, country, city, area, address_line, notes) VALUES (?, ?, ?, ?, ?, ?, ?)");
-        $orderStmt->execute([$_SESSION['customer_id'], $total, $country, $city, $area, $addressLine, $notes]);
-
-        $orderIdResult = $pdo->query("SELECT LAST_INSERT_ID() AS order_id");
-        $orderIdRow = $orderIdResult->fetch();
-        $orderId = (int)$orderIdRow['order_id'];
-
-        $itemStmt = $pdo->prepare("INSERT INTO order_items (order_id, menu_item_id, quantity, unit_price) VALUES (?, ?, ?, ?)");
+        $orderItemsPayload = [];
         foreach ($cartItems as $item) {
-            $itemStmt->execute([$orderId, $item['id'], $item['quantity'], $item['price']]);
+            $orderItemsPayload[] = [
+                'menu_item_id' => (int)$item['id'],
+                'name' => $item['name'],
+                'quantity' => (int)$item['quantity'],
+                'unit_price' => (float)$item['price'],
+                'line_total' => (float)$item['line_total']
+            ];
         }
+
+        $orderStmt = $pdo->prepare("INSERT INTO orders (user_id, total_amount, country, city, area, address_line, order_items_json, notes) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        $orderStmt->execute([$_SESSION['customer_id'], $total, $country, $city, $area, $addressLine, json_encode($orderItemsPayload), $notes]);
 
         $_SESSION['delivery_location'] = ['country' => $country, 'city' => $city, 'area' => $area];
         $_SESSION['cart'] = [];
@@ -118,4 +120,3 @@ require_once 'includes/header.php';
     </div>
 </section>
 <?php require_once 'includes/footer.php'; ?>
-

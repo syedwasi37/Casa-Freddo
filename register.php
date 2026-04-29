@@ -30,14 +30,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif ($password !== $confirmPassword) {
         $error = 'Passwords do not match.';
     } else {
-        $stmt = $pdo->prepare("SELECT id FROM customers WHERE email = ?");
+        $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");
         $stmt->execute([$email]);
         if ($stmt->fetch()) {
             $error = 'Email already registered.';
         } else {
             $hash = password_hash($password, PASSWORD_DEFAULT);
-            $insert = $pdo->prepare("INSERT INTO customers (name, email, phone, password) VALUES (?, ?, ?, ?)");
-            $insert->execute([$name, $email, $phone, $hash]);
+            $insert = $pdo->prepare("INSERT INTO users (username, password, is_admin, full_name, email, phone) VALUES (?, ?, 0, ?, ?, ?)");
+            $insert->execute([$email, $hash, $name, $email, $phone]);
             setFlashMessage('Registration successful. Please log in.', 'success');
             redirect('login.php');
         }

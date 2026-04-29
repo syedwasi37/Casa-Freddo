@@ -71,38 +71,26 @@ function formatPrice($price) {
  * Create customer/order tables if missing
  */
 function ensureCustomerTables($pdo) {
-    $pdo->query("CREATE TABLE IF NOT EXISTS customers (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        name VARCHAR(120) NOT NULL,
-        email VARCHAR(150) NOT NULL UNIQUE,
-        phone VARCHAR(30) DEFAULT NULL,
-        password VARCHAR(255) NOT NULL,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    ) ENGINE=InnoDB");
+    $pdo->query("ALTER TABLE users ADD COLUMN IF NOT EXISTS is_admin TINYINT(1) NOT NULL DEFAULT 0");
+    $pdo->query("ALTER TABLE users ADD COLUMN IF NOT EXISTS full_name VARCHAR(120) DEFAULT NULL");
+    $pdo->query("ALTER TABLE users ADD COLUMN IF NOT EXISTS email VARCHAR(150) DEFAULT NULL");
+    $pdo->query("ALTER TABLE users ADD COLUMN IF NOT EXISTS phone VARCHAR(30) DEFAULT NULL");
+    $pdo->query("ALTER TABLE users ADD UNIQUE KEY IF NOT EXISTS uniq_users_email (email)");
+    $pdo->query("UPDATE users SET is_admin = 1 WHERE id = 1 AND (is_admin = 0 OR is_admin IS NULL)");
 
     $pdo->query("CREATE TABLE IF NOT EXISTS orders (
         id INT AUTO_INCREMENT PRIMARY KEY,
-        customer_id INT NOT NULL,
+        user_id INT NOT NULL,
         total_amount DECIMAL(10,2) NOT NULL,
         status VARCHAR(30) NOT NULL DEFAULT 'pending',
         country VARCHAR(100) NOT NULL,
         city VARCHAR(100) NOT NULL,
         area VARCHAR(150) NOT NULL,
         address_line VARCHAR(255) NOT NULL,
+        order_items_json LONGTEXT NOT NULL,
         notes TEXT DEFAULT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        FOREIGN KEY (customer_id) REFERENCES customers(id) ON DELETE CASCADE
-    ) ENGINE=InnoDB");
-
-    $pdo->query("CREATE TABLE IF NOT EXISTS order_items (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        order_id INT NOT NULL,
-        menu_item_id INT NOT NULL,
-        quantity INT NOT NULL,
-        unit_price DECIMAL(10,2) NOT NULL,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
-        FOREIGN KEY (menu_item_id) REFERENCES menu_items(id) ON DELETE CASCADE
+        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
     ) ENGINE=InnoDB");
 }
 

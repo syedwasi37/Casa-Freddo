@@ -4,6 +4,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/functions.php';
+ensureCustomerTables($pdo);
 
 $error = '';
 $success = '';
@@ -26,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $error = 'Username already exists.';
         } else {
             $hash = password_hash($password, PASSWORD_DEFAULT);
-            $insert = $pdo->prepare("INSERT INTO users (username, password) VALUES (?, ?)");
+            $insert = $pdo->prepare("INSERT INTO users (username, password, is_admin) VALUES (?, ?, 1)");
             $insert->execute([$username, $hash]);
             $success = 'Admin account created. You can login now.';
         }
@@ -75,4 +76,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 </body>
 </html>
-
