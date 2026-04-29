@@ -55,9 +55,13 @@
     </footer>
     <div class="location-modal-backdrop" id="locationModalBackdrop" aria-hidden="true">
         <div class="location-modal" role="dialog" aria-modal="true" aria-labelledby="locationModalTitle">
-            <h3 id="locationModalTitle">Choose Delivery Location</h3>
-            <p>Set your area once so checkout stays fast.</p>
+            <div class="location-modal-head">
+                <span class="location-chip">Delivery Zone</span>
+                <h3 id="locationModalTitle">Choose Your Location</h3>
+                <p>Select country, city and area before ordering.</p>
+            </div>
             <form id="locationForm">
+                <div class="location-grid">
                 <div class="form-group">
                     <label for="country">Country</label>
                     <select id="country" name="country" class="form-control" required>
@@ -78,8 +82,9 @@
                     <label for="area">Area</label>
                     <input type="text" id="area" name="area" class="form-control" placeholder="e.g. Gulshan, DHA, Johar" required>
                 </div>
+                </div>
                 <div class="location-actions">
-                    <button type="button" class="btn btn-outline" id="skipLocation">Later</button>
+                    <button type="button" class="btn btn-outline" id="skipLocation">Not Now</button>
                     <button type="submit" class="btn btn-primary">Save Location</button>
                 </div>
             </form>

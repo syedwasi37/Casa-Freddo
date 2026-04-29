@@ -153,12 +153,14 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!locationModal) return;
         locationModal.classList.add('active');
         locationModal.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('modal-open');
     }
 
     function hideLocationModal() {
         if (!locationModal) return;
         locationModal.classList.remove('active');
         locationModal.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('modal-open');
     }
 
     function setLocationLabel(area) {
@@ -204,9 +206,15 @@ document.addEventListener('DOMContentLoaded', function() {
             const parsed = JSON.parse(savedLocation);
             if (parsed && parsed.area) {
                 setLocationLabel(parsed.area);
+                const countryEl = document.getElementById('country');
+                const cityEl = document.getElementById('city');
+                const areaEl = document.getElementById('area');
+                if (countryEl) countryEl.value = parsed.country || '';
+                if (cityEl) cityEl.value = parsed.city || '';
+                if (areaEl) areaEl.value = parsed.area || '';
             }
         } catch (_) {}
     } else {
-        setTimeout(showLocationModal, 700);
+        showLocationModal();
     }
 });

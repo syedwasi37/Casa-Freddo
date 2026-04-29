@@ -48,39 +48,49 @@ require_once 'includes/header.php';
 ?>
 <section class="section section-cream auth-wrap" style="padding-top: 140px;">
     <div class="container">
-        <div class="auth-card reveal active">
-            <h2>Create Account</h2>
-            <p>Register to place orders and checkout quickly.</p>
-            <?php if ($error): ?>
-                <div class="alert alert-error"><?php echo sanitize($error); ?></div>
-            <?php endif; ?>
-            <?php echo showFlashMessage(); ?>
-            <form action="register.php" method="POST" data-validate>
-                <div class="form-group">
-                    <label for="name">Full Name</label>
-                    <input type="text" id="name" name="name" class="form-control" required>
+        <div class="auth-shell reveal active">
+            <div class="auth-side">
+                <span class="auth-kicker">Casa Freddo</span>
+                <h2>Create Account</h2>
+                <p>Register once and order in seconds next time.</p>
+                <ul class="auth-points">
+                    <li>Secure customer profile</li>
+                    <li>Saved cart and delivery info</li>
+                    <li>Smoother checkout flow</li>
+                </ul>
+            </div>
+            <div class="auth-card">
+                <?php if ($error): ?>
+                    <div class="alert alert-error"><?php echo sanitize($error); ?></div>
+                <?php endif; ?>
+                <?php echo showFlashMessage(); ?>
+                <form action="register.php" method="POST" data-validate>
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input type="text" id="phone" name="phone" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirm_password">Confirm Password</label>
+                        <input type="password" id="confirm_password" name="confirm_password" class="form-control" required>
+                    </div>
+                    <button class="btn btn-primary auth-btn" type="submit">Create Account</button>
+                </form>
+                <p class="auth-switch">Already have an account? <a href="login.php">Login here</a></p>
                 </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label for="phone">Phone</label>
-                    <input type="text" id="phone" name="phone" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label for="confirm_password">Confirm Password</label>
-                    <input type="password" id="confirm_password" name="confirm_password" class="form-control" required>
-                </div>
-                <button class="btn btn-primary" type="submit">Register</button>
-            </form>
-            <p class="auth-switch">Already have an account? <a href="login.php">Login here</a></p>
+            </div>
         </div>
     </div>
 </section>
 <?php require_once 'includes/footer.php'; ?>
-
