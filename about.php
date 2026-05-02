@@ -50,7 +50,7 @@ require_once 'includes/header.php';
         <p class="section-subtitle reveal">What Drives Us</p>
         <h2 class="section-title reveal">Our <span>Mission</span> & Values</h2>
         
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; margin-top: 50px; text-align: center;">
+        <div class="values-grid">
             <div class="reveal">
                 <div style="width: 70px; height: 70px; background: rgba(201,169,110,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 1.8rem;">🌿</div>
                 <h3 style="font-family: var(--font-heading); font-size: 1.4rem; margin-bottom: 12px; color: var(--color-cream);">Natural Ingredients</h3>
@@ -118,7 +118,7 @@ require_once 'includes/header.php';
         <p class="section-subtitle reveal">The People</p>
         <h2 class="section-title reveal">Meet Our <span>Founders</span></h2>
         
-        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; max-width: 800px; margin: 50px auto 0;">
+        <div class="founders-grid">
             <div class="reveal" style="text-align: center;">
                 <div style="width: 150px; height: 150px; background: linear-gradient(135deg, #333, #444); border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 3rem; color: var(--color-gold); border: 3px solid var(--color-gold);">👨‍🍳</div>
                 <h3 style="font-family: var(--font-heading); font-size: 1.3rem; color: var(--color-cream); margin-bottom: 6px;">Marco Rossi</h3>
@@ -136,4 +136,3 @@ require_once 'includes/header.php';
 </section>
 
 <?php require_once 'includes/footer.php'; ?>
-

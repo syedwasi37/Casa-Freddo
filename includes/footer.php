@@ -63,15 +63,15 @@
             <form id="locationForm">
                 <div class="location-grid">
                 <div class="form-group">
-                    <label for="country">Country</label>
-                    <select id="country" name="country" class="form-control" required>
+                    <label for="modalCountry">Country</label>
+                    <select id="modalCountry" name="country" class="form-control" required>
                         <option value="">Select Country</option>
                         <option value="Pakistan">Pakistan</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="city">City</label>
-                    <select id="city" name="city" class="form-control" required>
+                    <label for="modalCity">City</label>
+                    <select id="modalCity" name="city" class="form-control" required>
                         <option value="">Select City</option>
                         <option value="Karachi">Karachi</option>
                         <option value="Lahore">Lahore</option>
@@ -79,8 +79,8 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="area">Area</label>
-                    <input type="text" id="area" name="area" class="form-control" placeholder="e.g. Gulshan, DHA, Johar" required>
+                    <label for="modalArea">Area</label>
+                    <input type="text" id="modalArea" name="area" class="form-control" placeholder="e.g. Gulshan, DHA, Johar" required>
                 </div>
                 </div>
                 <div class="location-actions">

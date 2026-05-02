@@ -206,9 +206,9 @@ document.addEventListener('DOMContentLoaded', function() {
             const parsed = JSON.parse(savedLocation);
             if (parsed && parsed.area) {
                 setLocationLabel(parsed.area);
-                const countryEl = document.getElementById('country');
-                const cityEl = document.getElementById('city');
-                const areaEl = document.getElementById('area');
+                const countryEl = locationForm ? locationForm.querySelector('[name="country"]') : null;
+                const cityEl = locationForm ? locationForm.querySelector('[name="city"]') : null;
+                const areaEl = locationForm ? locationForm.querySelector('[name="area"]') : null;
                 if (countryEl) countryEl.value = parsed.country || '';
                 if (cityEl) cityEl.value = parsed.city || '';
                 if (areaEl) areaEl.value = parsed.area || '';
